@@ -6,6 +6,7 @@ import { ref } from 'vue'
 
 const text = ref("");
 const showWords = ref([]);
+const checkedWords = ref([]);
 
 function convertWordList(wordList) {
   const newList = [];
@@ -41,13 +42,46 @@ function cleanString(dirtString) {
     ;
 }
 
-function save() {
+function analize() {
+  let savedWords = window.localStorage.getItem('words');
+  if(!savedWords) {
+    savedWords = [];
+  } else {
+    savedWords = JSON.parse(savedWords);
+  }
+
   const lowString = text.value.toLowerCase()
   const cleanedString = cleanString(lowString);
   const wordArray = cleanedString.split(' ');
-  const countedList = convertWordList(wordArray.sort());
+  const cleanedWordArray = wordArray.filter( ( el ) => !savedWords.includes( el ) );
+  const countedList = convertWordList(cleanedWordArray.sort());
   countedList.sort((x, y) => y.count - x.count);
   showWords.value = countedList;
+}
+
+function save() {
+  let savedWords = window.localStorage.getItem('words');
+  if(!savedWords) {
+    savedWords = [];
+  } else {
+    savedWords = JSON.parse(savedWords);
+  }
+
+  for (const word of checkedWords.value) {
+    savedWords.push(word);
+  }
+
+  window.localStorage.setItem('words', JSON.stringify(savedWords));
+
+  analize();
+}
+
+function buttonClick() {
+  if(checkedWords.value.length) {
+    save();
+  } else {
+    analize();
+  }
 }
 </script>
 
@@ -64,18 +98,13 @@ function save() {
     </main>
     
     <aside>
-      <button @click="save"></button>
+      <button @click="buttonClick" :class="{'danger': checkedWords.length}"></button>
 
-      <!-- <nav>
-        <button></button>
-        <button></button>
-        <button></button>
-      </nav> -->
       <ul>
         <li v-for="word in showWords">
           <label>
             <span>
-              <input type="checkbox" name="" id=""> 
+              <input type="checkbox" v-bind:value="word.word" v-model="checkedWords"> 
               {{word.word}}
             </span>
             <span class="count">
@@ -125,33 +154,14 @@ button {
     width: 100%;
     margin-bottom: 2rem;
 
+    &.danger {
+      background-color: var(--red);
+    }
+
     &:hover { 
       filter: brightness(150%);
     }
   }
-
-nav{
-  display: flex;
-  justify-content:space-between;
-  margin-bottom: 2rem;
-  
-  button {
-    border: .3rem solid var(--color-border);
-    font-size: 2rem;
-    height: 2.5rem;
-    aspect-ratio: 2/1;
-    border-radius: 100px;
-    cursor: pointer;
-    background-color: var(--yellow);
-  
-    &:first-child {
-      background-color: var(--green);
-    }
-    &:last-child {
-      background-color: var(--red);
-    }
-  }
-}
 
 
 ul {
