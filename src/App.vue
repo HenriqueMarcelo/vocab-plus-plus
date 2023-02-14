@@ -135,7 +135,7 @@ function save() {
     </header>
 
     <main>
-      <textarea v-model="text"></textarea>
+      <textarea rows="15" v-model="text"></textarea>
     </main>
 
     <aside>
@@ -190,6 +190,15 @@ section {
   grid-template-columns: 1fr 300px;
   grid-template-rows: auto 1fr;
   grid-gap: 2rem;
+  height: 100vh;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 230px;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: auto;
+  }
 }
 
 button {
@@ -221,8 +230,14 @@ aside {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  height: calc(100vh - 10.8rem);
+  min-height: 27.1rem;
 
-  height: 80vh;
+  @media (max-width: 640px) {
+    grid-column: 1 / 3;
+    height: auto;
+    min-height: auto;
+  }
 }
 
 ul {
@@ -231,10 +246,14 @@ ul {
   background-color: white;
   list-style: none;
   padding: 2rem 0;
-  height: calc(100% - 5.5rem);
+  height: 100%;
   font-size: 1.3rem;
-
   overflow-y: auto;
+
+  @media (max-width: 640px) {
+    overflow-y: visible;
+    height: auto;
+  }
 }
 
 header {
@@ -243,6 +262,12 @@ header {
 
 footer {
   grid-column: 1 / 3;
+}
+
+main {
+  @media (max-width: 640px) {
+    grid-column: 1 / 3;
+  }
 }
 
 textarea {
