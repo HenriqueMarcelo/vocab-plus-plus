@@ -15,7 +15,7 @@ function getSavedWords() {
   return savedWords;
 }
 
-function convertWordList(wordList) {
+function putCountInWordList(wordList) {
   const newList = [];
   for (const word of wordList) {
     if (word == "") {
@@ -70,16 +70,43 @@ function cleanString(dirtString) {
     .replaceAll("\n", " ");
 }
 
-function analize() {
+function updateNumberOfWordOnStorage(wordObject) {
   let savedWords = getSavedWords();
+  let updatedWords = savedWords.map((savedWordObject) => {
+    if (savedWordObject.word === wordObject.word) {
+      savedWordObject.count += wordObject.count;
+    }
+    return savedWordObject;
+  });
 
+  window.localStorage.setItem(
+    "@vocab-plus-plus:words",
+    JSON.stringify(updatedWords)
+  );
+}
+
+function updateNumberOfWordsOnStorage(words) {
+  words.forEach((word) => {
+    updateNumberOfWordOnStorage(word);
+  });
+}
+
+function analize(userWhoTrigger = true) {
   const lowString = text.value.toLowerCase();
   const cleanedString = cleanString(lowString);
   const wordArray = cleanedString.split(" ");
-  const cleanedWordArray = wordArray.filter((el) => !savedWords.includes(el));
-  const countedList = convertWordList(cleanedWordArray.sort());
+
+  let savedWords = getSavedWords();
+  const savedWordsString = savedWords.map((word) => word.word);
+
+  const newWords = wordArray.filter((el) => !savedWordsString.includes(el));
+  const countedList = putCountInWordList(newWords.sort());
   countedList.sort((x, y) => y.count - x.count);
   showWords.value = countedList;
+
+  if (userWhoTrigger) {
+    updateNumberOfWordsOnStorage(putCountInWordList(wordArray));
+  }
 }
 
 function save() {
@@ -97,7 +124,7 @@ function save() {
     JSON.stringify(savedWords)
   );
 
-  analize();
+  analize(false);
 }
 </script>
 
