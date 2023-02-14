@@ -1,7 +1,4 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
-
 import { ref } from "vue";
 
 const text = ref("");
@@ -74,14 +71,6 @@ function save() {
 
   analize();
 }
-
-function buttonClick() {
-  if (checkedWords.value.length) {
-    save();
-  } else {
-    analize();
-  }
-}
 </script>
 
 <template>
@@ -95,7 +84,7 @@ function buttonClick() {
     </main>
 
     <aside>
-      <button @click="buttonClick" :class="{ danger: checkedWords.length }">
+      <button @click="analize" :class="{ danger: checkedWords.length }">
         Analyze text
       </button>
 
@@ -117,7 +106,7 @@ function buttonClick() {
         </li>
       </ul>
 
-      <button @click="buttonClick" :class="{ danger: checkedWords.length }">
+      <button @click="save" :disabled="!checkedWords.length">
         Save as learned
       </button>
     </aside>
@@ -164,8 +153,13 @@ button {
     background-color: var(--red);
   }
 
-  &:hover {
+  &:not(:disabled):hover {
     filter: brightness(150%);
+  }
+
+  &:disabled {
+    background: gray;
+    cursor: not-allowed;
   }
 }
 
