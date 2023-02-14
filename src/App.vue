@@ -1,8 +1,8 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import TheWelcome from "./components/TheWelcome.vue";
 
-import { ref } from 'vue'
+import { ref } from "vue";
 
 const text = ref("");
 const showWords = ref([]);
@@ -10,19 +10,19 @@ const checkedWords = ref([]);
 
 function convertWordList(wordList) {
   const newList = [];
-  for (const word of wordList){
-    if(word == '') {
+  for (const word of wordList) {
+    if (word == "") {
       continue;
     }
-    let chek = newList.find(c => c.word === word);
-    if(!chek) {
+    let chek = newList.find((c) => c.word === word);
+    if (!chek) {
       chek = {
-        'word': word,
-        'count': 1,
+        word: word,
+        count: 1,
       };
       newList.push(chek);
     } else {
-      chek.count ++;
+      chek.count++;
     }
   }
   return newList;
@@ -30,38 +30,37 @@ function convertWordList(wordList) {
 
 function cleanString(dirtString) {
   return dirtString
-    .replaceAll('.', ' ')
-    .replaceAll('!', ' ')
-    .replaceAll('?', ' ')
-    .replaceAll(',', ' ')
-    .replaceAll("'", ' ')
-    .replaceAll('/n', ' ')
-    .replaceAll('(', ' ')
-    .replaceAll(')', ' ')
-    .replaceAll('\n', ' ')
-    ;
+    .replaceAll(".", " ")
+    .replaceAll("!", " ")
+    .replaceAll("?", " ")
+    .replaceAll(",", " ")
+    .replaceAll("'", " ")
+    .replaceAll("/n", " ")
+    .replaceAll("(", " ")
+    .replaceAll(")", " ")
+    .replaceAll("\n", " ");
 }
 
 function analize() {
-  let savedWords = window.localStorage.getItem('words');
-  if(!savedWords) {
+  let savedWords = window.localStorage.getItem("words");
+  if (!savedWords) {
     savedWords = [];
   } else {
     savedWords = JSON.parse(savedWords);
   }
 
-  const lowString = text.value.toLowerCase()
+  const lowString = text.value.toLowerCase();
   const cleanedString = cleanString(lowString);
-  const wordArray = cleanedString.split(' ');
-  const cleanedWordArray = wordArray.filter( ( el ) => !savedWords.includes( el ) );
+  const wordArray = cleanedString.split(" ");
+  const cleanedWordArray = wordArray.filter((el) => !savedWords.includes(el));
   const countedList = convertWordList(cleanedWordArray.sort());
   countedList.sort((x, y) => y.count - x.count);
   showWords.value = countedList;
 }
 
 function save() {
-  let savedWords = window.localStorage.getItem('words');
-  if(!savedWords) {
+  let savedWords = window.localStorage.getItem("words");
+  if (!savedWords) {
     savedWords = [];
   } else {
     savedWords = JSON.parse(savedWords);
@@ -71,13 +70,13 @@ function save() {
     savedWords.push(word);
   }
 
-  window.localStorage.setItem('words', JSON.stringify(savedWords));
+  window.localStorage.setItem("words", JSON.stringify(savedWords));
 
   analize();
 }
 
 function buttonClick() {
-  if(checkedWords.value.length) {
+  if (checkedWords.value.length) {
     save();
   } else {
     analize();
@@ -88,31 +87,39 @@ function buttonClick() {
 <template>
   <section class="section">
     <header>
-      <h1>
-        Vocab++
-      </h1>
+      <h1>Vocab++</h1>
     </header>
-  
+
     <main>
       <textarea rows="30" v-model="text"></textarea>
     </main>
-    
+
     <aside>
-      <button @click="buttonClick" :class="{'danger': checkedWords.length}"></button>
+      <button @click="buttonClick" :class="{ danger: checkedWords.length }">
+        Analyze text
+      </button>
 
       <ul>
-        <li v-for="word in showWords">
+        <li v-for="word in showWords" :key="word">
           <label>
             <span>
-              <input type="checkbox" v-bind:value="word.word" v-model="checkedWords"> 
-              {{word.word}}
+              <input
+                type="checkbox"
+                v-bind:value="word.word"
+                v-model="checkedWords"
+              />
+              {{ word.word }}
             </span>
             <span class="count">
-              {{word.count}}
+              {{ word.count }}
             </span>
           </label>
         </li>
       </ul>
+
+      <button @click="buttonClick" :class="{ danger: checkedWords.length }">
+        Save as learned
+      </button>
     </aside>
     <!-- <footer>
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti praesentium cumque excepturi nam laborum? 
@@ -121,15 +128,14 @@ function buttonClick() {
       nesciunt illo culpa voluptates. Officia nulla, totam saepe sint esse laudantium deleniti debitis exercitationem.
     </footer> -->
   </section>
-
 </template>
 
 <style scoped lang="scss">
-  h1 {
-    font-size: 3rem;
-    font-weight: bold;
-  }
-  section{
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+section {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -137,35 +143,40 @@ function buttonClick() {
   font-weight: normal;
 }
 
-section{
+section {
   display: grid;
   grid-template-columns: 1fr 300px;
   grid-gap: 2rem;
 }
 
 button {
-    border: .3rem solid var(--color-border);
-    font-size: 2rem;
-    height: 3rem;
-    border-radius: 100px;
-    cursor: pointer;
-    background-color: var(--green);
-    color: var(--white);
-    width: 100%;
-    margin-bottom: 2rem;
+  border: 0.3rem solid var(--color-border);
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 100px;
+  cursor: pointer;
+  background-color: var(--green);
+  color: var(--white);
+  width: 100%;
+  transition: 100ms;
 
-    &.danger {
-      background-color: var(--red);
-    }
-
-    &:hover { 
-      filter: brightness(150%);
-    }
+  &.danger {
+    background-color: var(--red);
   }
 
+  &:hover {
+    filter: brightness(150%);
+  }
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
 ul {
-  border: .3rem solid var(--color-border);
+  border: 0.3rem solid var(--color-border);
   border-radius: 1rem;
   background-color: white;
   list-style: none;
@@ -184,7 +195,7 @@ footer {
 }
 
 textarea {
-  border: .3rem solid var(--color-border);
+  border: 0.3rem solid var(--color-border);
   border-radius: 1rem;
   padding: 2rem;
   width: 100%;
@@ -193,11 +204,11 @@ textarea {
 }
 
 label {
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
-.count{
+.count {
   background: var(--black);
   /* border: 3px solid var(--white); */
   color: var(--white);
