@@ -5,6 +5,16 @@ const text = ref("");
 const showWords = ref([]);
 const checkedWords = ref([]);
 
+function getSavedWords() {
+  let savedWords = window.localStorage.getItem("@vocab-plus-plus:words");
+  if (!savedWords) {
+    savedWords = [];
+  } else {
+    savedWords = JSON.parse(savedWords);
+  }
+  return savedWords;
+}
+
 function convertWordList(wordList) {
   const newList = [];
   for (const word of wordList) {
@@ -35,16 +45,33 @@ function cleanString(dirtString) {
     .replaceAll("/n", " ")
     .replaceAll("(", " ")
     .replaceAll(")", " ")
+    .replaceAll("’", " ")
+    .replaceAll("“", " ")
+    .replaceAll("™", " ")
+    .replaceAll("‘", " ")
+    .replaceAll("”", " ")
+    .replaceAll(":", " ")
+    .replaceAll("®", " ")
+    .replaceAll(";", " ")
+    .replaceAll("/", " ")
+    .replaceAll("|", " ")
+    .replaceAll("©", " ")
+    .replaceAll("—", " ")
+    .replaceAll("1", " ")
+    .replaceAll("2", " ")
+    .replaceAll("3", " ")
+    .replaceAll("4", " ")
+    .replaceAll("5", " ")
+    .replaceAll("6", " ")
+    .replaceAll("7", " ")
+    .replaceAll("8", " ")
+    .replaceAll("9", " ")
+    .replaceAll("0", " ")
     .replaceAll("\n", " ");
 }
 
 function analize() {
-  let savedWords = window.localStorage.getItem("words");
-  if (!savedWords) {
-    savedWords = [];
-  } else {
-    savedWords = JSON.parse(savedWords);
-  }
+  let savedWords = getSavedWords();
 
   const lowString = text.value.toLowerCase();
   const cleanedString = cleanString(lowString);
@@ -56,18 +83,19 @@ function analize() {
 }
 
 function save() {
-  let savedWords = window.localStorage.getItem("words");
-  if (!savedWords) {
-    savedWords = [];
-  } else {
-    savedWords = JSON.parse(savedWords);
-  }
+  let savedWords = getSavedWords();
 
   for (const word of checkedWords.value) {
-    savedWords.push(word);
+    savedWords.push({
+      word: word.word,
+      count: word.count,
+    });
   }
 
-  window.localStorage.setItem("words", JSON.stringify(savedWords));
+  window.localStorage.setItem(
+    "@vocab-plus-plus:words",
+    JSON.stringify(savedWords)
+  );
 
   analize();
 }
@@ -94,7 +122,7 @@ function save() {
             <span>
               <input
                 type="checkbox"
-                v-bind:value="word.word"
+                v-bind:value="{ word: word.word, count: word.count }"
                 v-model="checkedWords"
               />
               {{ word.word }}
