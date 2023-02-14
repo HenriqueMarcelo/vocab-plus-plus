@@ -135,7 +135,7 @@ function save() {
     </header>
 
     <main>
-      <textarea rows="30" v-model="text"></textarea>
+      <textarea v-model="text"></textarea>
     </main>
 
     <aside>
@@ -188,6 +188,7 @@ section {
 section {
   display: grid;
   grid-template-columns: 1fr 300px;
+  grid-template-rows: auto 1fr;
   grid-gap: 2rem;
 }
 
@@ -220,6 +221,8 @@ aside {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  height: 80vh;
 }
 
 ul {
@@ -230,6 +233,8 @@ ul {
   padding: 2rem 0;
   height: calc(100% - 5.5rem);
   font-size: 1.3rem;
+
+  overflow-y: auto;
 }
 
 header {
@@ -245,6 +250,7 @@ textarea {
   border-radius: 1rem;
   padding: 2rem;
   width: 100%;
+  height: 100%;
   resize: none;
   font-size: 1.3rem;
 }
