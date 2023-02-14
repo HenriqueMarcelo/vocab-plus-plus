@@ -99,9 +99,7 @@ function save() {
               />
               {{ word.word }}
             </span>
-            <span class="count">
-              {{ word.count }}
-            </span>
+            <span class="simpleCount"> [{{ word.count }}] </span>
           </label>
         </li>
       </ul>
@@ -174,8 +172,7 @@ ul {
   border-radius: 1rem;
   background-color: white;
   list-style: none;
-  padding: 0;
-  padding: 2rem;
+  padding: 2rem 0;
   height: calc(100% - 5.5rem);
   font-size: 1.3rem;
 }
@@ -197,17 +194,31 @@ textarea {
   font-size: 1.3rem;
 }
 
-label {
-  display: flex;
-  justify-content: space-between;
+li {
+  label {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem 2rem;
+  }
+  &:nth-child(odd) label {
+    background: whitesmoke;
+  }
 }
 
+// not good in the design
 .count {
   background: var(--black);
-  /* border: 3px solid var(--white); */
   color: var(--white);
-  border-radius: 1rem;
-  display: inline-block;
-  padding: 0 0.5rem;
+  border-radius: 100rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  height: 2.3rem;
+  font-family: monospace;
+}
+
+.simpleCount {
+  font-family: monospace;
 }
 </style>
