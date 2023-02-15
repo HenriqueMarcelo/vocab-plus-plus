@@ -1,35 +1,20 @@
-# vocab-plus-plus
+[Documentação em português 🇧🇷](README.pt.md)
 
-This template should help get you started developing with Vue 3 in Vite.
+# Vocab++
 
-## Recommended IDE Setup
+Our application is a powerful tool that helps users expand their vocabulary. With Vocab++, you can paste a text and get a list of words used in the text, with the number of times each word appeared.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+In addition, you can tell which words you already know so that they will no longer appear in the list when you use the application again. Over time, Vocab++ will show only the words you do not know yet, making your learning process easier.
 
-## Customize configuration
+Our application is hosted at http://kursi.com.br/vocab-plus-plus/ so you can easily access it from anywhere.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Try Vocab++ now and expand your vocabulary simply and efficiently! Our application is hosted at http://kursi.com.br/vocab-plus-plus/ so you can easily access it from anywhere.
 
-## Project Setup
+## 🛠️Ferramentas used 
 
-```sh
-npm install
-```
+* [Vue.js](https://vuejs.org/) - The web framework used
+* [Vite](https://vitejs.dev/) - Bundler
 
-### Compile and Hot-Reload for Development
+## 🚀️ Deploy
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Deploying the application is done automatically via a [Github Action](.github/workflows/main.yml) that compiles the project and uploads it to an FTP server.
