@@ -1,0 +1,24 @@
+name: Build and deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy 🏗️
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@main
+
+      - name: Install dependencies 🔧
+        run: |
+          yarn install --immutable --immutable-cache --check-cache
+          
+      - name: Build dependencies 👷‍♀️
+        run: yarn build
+        
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist

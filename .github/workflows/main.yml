@@ -3,22 +3,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
-    name: Build and Deploy 🏗️
+  build:
+    name: Build ⛏
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository 🛎️
+      - name: Checkout repository
         uses: actions/checkout@main
-
-      - name: Install dependencies 🔧
-        run: |
-          yarn install --immutable --immutable-cache --check-cache
-          
-      - name: Build dependencies 👷‍♀️
+      - name: Install dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+      - name: Build dependencies
         run: yarn build
-        
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Archive production artifact
+        uses: actions/upload-artifact@main
         with:
-          branch: gh-pages
-          folder: dist
+          name: dist
+          path: dist
+  deploy:
+    name: Deploy 🚀
+    needs: build
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@main
+      - name: Download artifact
+        uses: actions/download-artifact@main
+        with: 
+          name: dist
+          path: dist
+      - name: Sync files to hosting
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with: 
+          server: ${{ secrets.ftp_host }}
+          username: ${{ secrets.ftp_user }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ${{ secrets.ftp_dir }}
+          local-dir: ./dist/
