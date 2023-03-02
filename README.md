@@ -6,9 +6,9 @@ Our application is a powerful tool that helps users expand their vocabulary. Wit
 
 In addition, you can tell which words you already know so that they will no longer appear in the list when you use the application again. Over time, Vocab++ will show only the words you do not know yet, making your learning process easier.
 
-Our application is hosted at http://kursi.com.br/vocab-plus-plus/ so you can easily access it from anywhere.
+Our application is hosted at https://vocab-plus-plus.kursi.com.br/ so you can easily access it from anywhere.
 
-Try Vocab++ now and expand your vocabulary simply and efficiently! Our application is hosted at http://kursi.com.br/vocab-plus-plus/ so you can easily access it from anywhere.
+Try Vocab++ now and expand your vocabulary simply and efficiently! Our application is hosted at https://vocab-plus-plus.kursi.com.br/ so you can easily access it from anywhere.
 
 ## 🛠️Ferramentas used 
 

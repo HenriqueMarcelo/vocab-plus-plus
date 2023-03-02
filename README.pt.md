@@ -6,9 +6,9 @@ Nosso aplicativo é uma ferramenta poderosa que ajuda os usuários a expandirem 
 
 Além disso, você pode informar quais palavras você já conhece, para que elas não apareçam mais na lista quando você utilizar o aplicativo novamente. Com o tempo, o Vocab++ irá mostrar apenas as palavras que você ainda não conhece, facilitando o seu processo de aprendizado.
 
-Nosso aplicativo está hospedado em http://kursi.com.br/vocab-plus-plus/ para que você possa acessá-lo facilmente de qualquer lugar.
+Nosso aplicativo está hospedado em https://vocab-plus-plus.kursi.com.br/ para que você possa acessá-lo facilmente de qualquer lugar.
 
-Experimente o Vocab++ agora mesmo e expanda seu vocabulário de forma simples e eficiente! Nosso aplicativo está hospedado em http://kursi.com.br/vocab-plus-plus/ para que você possa acessá-lo facilmente de qualquer lugar.
+Experimente o Vocab++ agora mesmo e expanda seu vocabulário de forma simples e eficiente! Nosso aplicativo está hospedado em https://vocab-plus-plus.kursi.com.br/ para que você possa acessá-lo facilmente de qualquer lugar.
 
 ## 🛠️Ferramentas utilizadas 
 
