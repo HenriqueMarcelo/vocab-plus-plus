@@ -126,6 +126,15 @@ function save() {
 
   analize(false);
 }
+
+// function checkAll() {
+//   const checkboxs = document.querySelectorAll("input[type=checkbox]");
+//   checkboxs.forEach((checkbox) => {
+//     setTimeout(() => {
+//       checkbox.click();
+//     }, 1);
+//   });
+// }
 </script>
 
 <template>
@@ -139,9 +148,7 @@ function save() {
     </main>
 
     <aside>
-      <button @click="analize" :class="{ danger: checkedWords.length }">
-        Analyze text
-      </button>
+      <button @click="analize">Analyze text</button>
 
       <ul>
         <li v-for="word in showWords" :key="word">
@@ -158,6 +165,8 @@ function save() {
           </label>
         </li>
       </ul>
+
+      <!-- <button @click="checkAll">Check All</button> -->
 
       <button @click="save" :disabled="!checkedWords.length">
         Save as learned
